@@ -145,6 +145,7 @@ The seed script creates 3 users and 15 posts automatically on first startup.
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
 | `POST` | `/api/v1/users` | No | Create user, returns user + JWT token |
+| `GET` | `/api/v1/users/{id}` | No | Get user info by ID |
 | `GET` | `/api/v1/users/{id}/token` | No | Get JWT token by user ID |
 | `PATCH` | `/api/v1/users/{id}` | No | Update user name |
 | `DELETE` | `/api/v1/users/{id}` | No | Delete user (cascades to posts) |
@@ -271,6 +272,8 @@ pytest tests/ -v
 ### Test coverage:
 - ✅ Create user
 - ✅ Get token
+- ✅ Get user by ID
+- ✅ Get user — 404 for missing user
 - ✅ Create post (authorized)
 - ✅ Create post (unauthorized — rejected)
 - ✅ Get user posts (pagination)

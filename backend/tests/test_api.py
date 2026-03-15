@@ -149,6 +149,24 @@ async def test_delete_user(client: AsyncClient):
 
 
 @pytest.mark.asyncio
+async def test_get_user(client: AsyncClient):
+    create_resp = await client.post("/api/v1/users", json={"name": "GetUser"})
+    user_id = create_resp.json()["user"]["id"]
+
+    resp = await client.get(f"/api/v1/users/{user_id}")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["id"] == user_id
+    assert data["name"] == "GetUser"
+
+
+@pytest.mark.asyncio
+async def test_get_user_not_found(client: AsyncClient):
+    resp = await client.get("/api/v1/users/999999")
+    assert resp.status_code == 404
+
+
+@pytest.mark.asyncio
 async def test_forbidden_edit_post(client: AsyncClient):
     # Create two users
     resp1 = await client.post("/api/v1/users", json={"name": "Owner"})

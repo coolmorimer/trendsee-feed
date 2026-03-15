@@ -125,7 +125,7 @@
 // Лента: показываем посты всех юзеров с бесконечным скроллом.
 // Неавторизованные могут читать, но не могут писать.
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { userApi, postApi } from '../services/api'
 import { useInfiniteScroll } from '../composables/useInfiniteScroll'
@@ -230,7 +230,7 @@ async function loadMore() {
   return data.has_more
 }
 
-const { isLoading, hasMore, error, reset } = useInfiniteScroll(loadMore)
+const { isLoading, hasMore, error, reset, check } = useInfiniteScroll(loadMore)
 
 async function loadInitial() {
   initialLoading.value = true
@@ -242,6 +242,11 @@ async function loadInitial() {
   try {
     const more = await loadMore()
     hasMore.value = more
+    // если постов меньше чем умещается на экране — сразу подгружаем ещё
+    if (more) {
+      await nextTick()
+      check()
+    }
   } catch (e) {
     fetchError.value = e.response?.data?.detail || 'Не удалось загрузить публикации'
   } finally {

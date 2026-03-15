@@ -99,6 +99,13 @@ async function handleLogin() {
     const { data } = await userApi.getToken(userId.value)
     localStorage.setItem('token', data.token)
     localStorage.setItem('userId', String(userId.value))
+    // Получаем имя пользователя для отображения в шапке
+    try {
+      const { data: userData } = await userApi.getById(userId.value)
+      localStorage.setItem('userName', userData.name)
+    } catch {
+      // некритично, имя просто не будет отображаться
+    }
     success.value = 'Авторизация успешна! Перенаправление…'
     setTimeout(() => router.push('/feed'), 500)
   } catch (e) {
