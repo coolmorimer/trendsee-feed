@@ -1,0 +1,171 @@
+/* Глобальные стили + дизайн-токены (CSS custom properties) */
+/* Тёмная тема по умолчанию, светлая через [data-theme="light"] */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-primary: #8b5cf6;
+  --color-primary-hover: #7c3aed;
+  --color-primary-glow: rgba(139, 92, 246, 0.25);
+  --color-bg: #08080f;
+  --color-bg-elevated: #0f0f1a;
+  --color-surface: #13132a;
+  --color-surface-hover: #1a1a3e;
+  --color-border: rgba(139, 92, 246, 0.15);
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-text: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  --color-danger: #f43f5e;
+  --color-danger-hover: #e11d48;
+  --color-success: #10b981;
+  --gradient-primary: linear-gradient(135deg, #8b5cf6, #6366f1);
+  --gradient-bg: linear-gradient(180deg, #08080f 0%, #0f0f1a 100%);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.15);
+  --color-hover-overlay: rgba(255, 255, 255, 0.05);
+  --color-modal-overlay: rgba(0, 0, 0, 0.7);
+  --transition: 0.2s ease;
+  --transition-slow: 0.3s ease;
+}
+
+[data-theme="light"] {
+  --color-primary: #7c3aed;
+  --color-primary-hover: #6d28d9;
+  --color-primary-glow: rgba(124, 58, 237, 0.15);
+  --color-bg: #f8f9fc;
+  --color-bg-elevated: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;
+  --color-border: rgba(124, 58, 237, 0.15);
+  --color-border-subtle: #e2e8f0;
+  --color-text: #1e293b;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
+  --color-danger: #e11d48;
+  --color-danger-hover: #be123c;
+  --color-success: #059669;
+  --gradient-primary: linear-gradient(135deg, #7c3aed, #6366f1);
+  --gradient-bg: linear-gradient(180deg, #f8f9fc 0%, #eef2ff 100%);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 15px rgba(124, 58, 237, 0.08);
+  --color-hover-overlay: rgba(0, 0, 0, 0.04);
+  --color-modal-overlay: rgba(0, 0, 0, 0.4);
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input, textarea {
+  font-family: inherit;
+  color: var(--color-text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 3px;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.25);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+/* Modal transitions */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .modal-content,
+.modal-leave-active .modal-content {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal-enter-from .modal-content {
+  transform: translateY(30px) scale(0.95);
+  opacity: 0;
+}
+
+.modal-leave-to .modal-content {
+  transform: translateY(10px) scale(0.98);
+  opacity: 0;
+}
+
+/* Fade transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Slide-down transition */
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.25s ease;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}

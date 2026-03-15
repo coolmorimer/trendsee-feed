@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Build
+dist/
+*.egg-info/
+
+# Environment
+.env
+*.db
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+pgdata/
+
+# OS
+.DS_Store
+Thumbs.db
+*.egg-info/
+
+# Environment
+.env
+backend/.env
+frontend/.env
+
+# Build
+frontend/dist/
+backend/test.db
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.log
+
+# Alembic
+*.db
