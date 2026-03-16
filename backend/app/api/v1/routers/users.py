@@ -32,6 +32,14 @@ async def create_user(
     return UserWithToken(user=user, token=token)
 
 
+@router.get("/{user_id}", response_model=UserResponse)
+async def get_user(
+    user_id: int,
+    service: Annotated[UserService, Depends(get_user_service)],
+):
+    return await service.get_user(user_id)
+
+
 @router.get("/{user_id}/token", response_model=TokenResponse)
 async def get_token(
     user_id: int,

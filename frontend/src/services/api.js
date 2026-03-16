@@ -22,6 +22,9 @@ export const userApi = {
   create(name) {
     return api.post('/users', { name })
   },
+  getById(userId) {
+    return api.get(`/users/${userId}`)
+  },
   getToken(userId) {
     return api.get(`/users/${userId}/token`)
   },

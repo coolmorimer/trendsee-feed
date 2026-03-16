@@ -57,7 +57,7 @@
 <script setup>
 // Страница профиля автора — показываем все его посты
 
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import { userApi } from '../services/api'
 import { useInfiniteScroll } from '../composables/useInfiniteScroll'
 import PostCard from '../components/PostCard.vue'
@@ -75,12 +75,14 @@ const selectedPost = ref(null)
 const initialLoading = ref(true)
 const fetchError = ref('')
 const total = ref(null)
+const authorData = ref(null)  // данные профиля — загружаем отдельно чтобы имя было даже без постов
 const currentAuthUserId = ref(localStorage.getItem('userId'))
 const LIMIT = 20
 let offset = 0
 const existingIds = new Set()
 
 const authorName = computed(() => {
+  if (authorData.value) return authorData.value.name
   if (posts.value.length > 0 && posts.value[0].author_name) {
     return posts.value[0].author_name
   }
@@ -88,8 +90,9 @@ const authorName = computed(() => {
 })
 
 const authorInitial = computed(() => {
-  if (posts.value.length > 0 && posts.value[0].author_name) {
-    return posts.value[0].author_name.charAt(0).toUpperCase()
+  const name = authorName.value
+  if (name && !name.startsWith('Автор #')) {
+    return name.charAt(0).toUpperCase()
   }
   return props.userId
 })
@@ -127,7 +130,7 @@ async function loadMore() {
   return data.has_more
 }
 
-const { isLoading, hasMore, error, reset } = useInfiniteScroll(loadMore)
+const { isLoading, hasMore, error, reset, check } = useInfiniteScroll(loadMore)
 
 async function loadInitial() {
   initialLoading.value = true
@@ -135,10 +138,21 @@ async function loadInitial() {
   offset = 0
   posts.value = []
   existingIds.clear()
+  authorData.value = null
   reset()
   try {
-    const more = await loadMore()
+    // загружаем данные пользователя и первую страницу постов параллельно
+    const [more] = await Promise.all([
+      loadMore(),
+      userApi.getById(props.userId)
+        .then(({ data }) => { authorData.value = data })
+        .catch(() => {}),
+    ])
     hasMore.value = more
+    if (more) {
+      await nextTick()
+      check()
+    }
   } catch (e) {
     fetchError.value = e.response?.data?.detail || 'Не удалось загрузить публикации'
   } finally {

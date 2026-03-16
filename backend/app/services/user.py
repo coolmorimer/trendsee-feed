@@ -23,6 +23,10 @@ class UserService:
             )
         return user
 
+    async def get_user(self, user_id: int) -> UserResponse:
+        user = await self.get_user_or_404(user_id)
+        return UserResponse.model_validate(user)
+
     async def get_token(self, user_id: int) -> str:
         user = await self.get_user_or_404(user_id)
         return create_access_token(user.id)
