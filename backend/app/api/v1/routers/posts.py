@@ -48,7 +48,7 @@ async def update_post(
 
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="No fields to update",
+            detail="Нет полей для обновления",
         )
     return await service.update_post(
         post_id=post_id, current_user_id=current_user_id, **update_data

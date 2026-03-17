@@ -31,10 +31,10 @@ def decode_access_token(token: str) -> int:
     except jwt.ExpiredSignatureError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token has expired",
+            detail="Срок действия токена истёк",
         )
     except (jwt.InvalidTokenError, KeyError, ValueError):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token",
+            detail="Недействительный токен",
         )

@@ -31,13 +31,13 @@ class PostService:
         post = await self.repository.get_by_id(post_id)
         if not post:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="Post not found"
+                status_code=status.HTTP_404_NOT_FOUND, detail="Публикация не найдена"
             )
         # редактировать можно только свои посты
         if post.user_id != current_user_id:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="You can only edit your own posts",
+                detail="Можно редактировать только свои публикации",
             )
         post = await self.repository.update(post, **kwargs)
         await self.cache.invalidate_user_posts(current_user_id)
@@ -47,12 +47,12 @@ class PostService:
         post = await self.repository.get_by_id(post_id)
         if not post:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="Post not found"
+                status_code=status.HTTP_404_NOT_FOUND, detail="Публикация не найдена"
             )
         if post.user_id != current_user_id:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="You can only delete your own posts",
+                detail="Можно удалять только свои публикации",
             )
         await self.repository.delete(post)
         await self.cache.invalidate_user_posts(current_user_id)

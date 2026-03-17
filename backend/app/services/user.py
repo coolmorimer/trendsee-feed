@@ -19,7 +19,7 @@ class UserService:
         user = await self.repository.get_by_id(user_id)
         if not user:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+                status_code=status.HTTP_404_NOT_FOUND, detail="Пользователь не найден"
             )
         return user
 

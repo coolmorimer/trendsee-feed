@@ -17,36 +17,36 @@ engine = create_async_engine(settings.database_url)
 session_factory = async_sessionmaker(engine, expire_on_commit=False)
 
 USERS = [
-    {"name": "Alice Johnson"},
-    {"name": "Bob Smith"},
-    {"name": "Charlie Brown"},
+    {"name": "Алиса Иванова"},
+    {"name": "Борис Смирнов"},
+    {"name": "Виктор Петров"},
 ]
 
 POSTS = [
-    {"title": "Getting Started with FastAPI", "text": "FastAPI is a modern, fast web framework for building APIs with Python 3.7+ based on standard Python type hints. It provides automatic interactive API documentation, data validation, serialization, and asynchronous support out of the box."},
-    {"title": "Why I Love Vue 3", "text": "Vue 3 brings the Composition API, better TypeScript support, improved reactivity system, and Teleport. The new setup function makes it easier to organize code by feature rather than by option type."},
-    {"title": "Docker Best Practices", "text": "Use multi-stage builds, minimize layers, use .dockerignore, run as non-root user, and pin your base image versions. These practices lead to smaller, more secure container images."},
-    {"title": "Understanding Redis Caching", "text": "Redis is an in-memory data store that can be used as a cache, message broker, or database. Setting appropriate TTLs, using the right data structures, and implementing cache invalidation are key to effective caching."},
-    {"title": "Async Python Deep Dive", "text": "Python asyncio provides infrastructure for writing single-threaded concurrent code using coroutines. With async/await syntax, you can write asynchronous code that looks and behaves like synchronous code."},
-    {"title": "PostgreSQL Performance Tips", "text": "Use indexes wisely, analyze your queries with EXPLAIN, batch your inserts, use connection pooling, and keep your statistics up to date. Partitioning large tables can also significantly improve query performance."},
-    {"title": "Building RESTful APIs", "text": "Good REST APIs use proper HTTP methods, status codes, and resource naming. Implement pagination, filtering, and sorting. Use versioning from day one and document everything with OpenAPI."},
-    {"title": "SQLAlchemy 2.0 Migration Guide", "text": "SQLAlchemy 2.0 introduces a new unified tutorial, declarative mapping with mapped_column, and improved async support. The 2.0 style uses select() instead of Query objects for all queries."},
-    {"title": "Frontend State Management", "text": "Managing state in modern frontend applications requires choosing the right tool. Pinia for Vue, Redux for React, or sometimes just composables and reactive refs are enough for smaller apps."},
-    {"title": "CI/CD Pipeline Setup", "text": "A good CI/CD pipeline includes linting, testing, building, and deploying stages. Use GitHub Actions or GitLab CI with Docker for reproducible builds and automated deployments."},
-    {"title": "JWT Authentication Explained", "text": "JSON Web Tokens encode claims in a compact, URL-safe format. Use short-lived access tokens with refresh tokens for better security. Always validate token signatures server-side."},
-    {"title": "Infinite Scroll Implementation", "text": "Infinite scroll loads content dynamically as users scroll down. Use intersection observers or scroll event listeners with debouncing. Track offset, loading state, and has_more flag to prevent unnecessary requests."},
-    {"title": "Clean Architecture in Python", "text": "Separate concerns into layers: presentation, business logic, and data access. Use dependency injection, keep framework-specific code at the edges, and design your domain model first."},
-    {"title": "WebSocket Real-Time Features", "text": "WebSockets enable bidirectional communication between client and server. They are perfect for chat applications, live notifications, and real-time dashboards. FastAPI supports WebSockets natively."},
-    {"title": "Testing Async Code", "text": "Testing async Python code requires pytest-asyncio and proper fixtures. Mock external dependencies, use in-memory databases for speed, and test both happy paths and error scenarios."},
+    {"title": "Начало работы с FastAPI", "text": "FastAPI — современный и быстрый веб-фреймворк для создания API на Python 3.7+, основанный на стандартных аннотациях типов. Из коробки он предоставляет автоматическую интерактивную документацию, валидацию данных, сериализацию и поддержку асинхронности."},
+    {"title": "Почему мне нравится Vue 3", "text": "Vue 3 принёс Composition API, улучшенную поддержку TypeScript, обновлённую систему реактивности и Teleport. Новая функция setup упрощает организацию кода по функциональности, а не по типу опций."},
+    {"title": "Лучшие практики Docker", "text": "Используйте multi-stage сборки, минимизируйте количество слоёв, применяйте .dockerignore, запускайте контейнеры от непривилегированного пользователя и фиксируйте версии базовых образов. Эти практики ведут к меньшим и более безопасным образам."},
+    {"title": "Кэширование в Redis", "text": "Redis — хранилище данных в памяти, которое можно использовать как кэш, брокер сообщений или базу данных. Правильный выбор TTL, подходящих структур данных и реализация инвалидации кэша — ключ к эффективному кэшированию."},
+    {"title": "Глубокое погружение в async Python", "text": "Python asyncio предоставляет инфраструктуру для написания однопоточного конкурентного кода с использованием корутин. С синтаксисом async/await можно писать асинхронный код, который выглядит и ведёт себя как синхронный."},
+    {"title": "Советы по производительности PostgreSQL", "text": "Используйте индексы с умом, анализируйте запросы с помощью EXPLAIN, группируйте вставки, применяйте пулы соединений и поддерживайте актуальную статистику. Партиционирование больших таблиц тоже значительно улучшает производительность запросов."},
+    {"title": "Создание RESTful API", "text": "Хорошие REST API используют правильные HTTP-методы, коды статусов и именование ресурсов. Реализуйте пагинацию, фильтрацию и сортировку. Используйте версионирование с первого дня и документируйте всё через OpenAPI."},
+    {"title": "Руководство по миграции на SQLAlchemy 2.0", "text": "SQLAlchemy 2.0 представляет новое единое руководство, декларативный маппинг с mapped_column и улучшенную поддержку async. Стиль 2.0 использует select() вместо объектов Query для всех запросов."},
+    {"title": "Управление состоянием на фронтенде", "text": "Управление состоянием в современных фронтенд-приложениях требует выбора правильного инструмента. Pinia для Vue, Redux для React, а иногда достаточно composables и реактивных ref для небольших приложений."},
+    {"title": "Настройка CI/CD пайплайна", "text": "Хороший CI/CD пайплайн включает этапы линтинга, тестирования, сборки и деплоя. Используйте GitHub Actions или GitLab CI с Docker для воспроизводимых сборок и автоматизированных развёртываний."},
+    {"title": "JWT-аутентификация простым языком", "text": "JSON Web Tokens кодируют утверждения в компактном, URL-безопасном формате. Используйте короткоживущие access-токены с refresh-токенами для лучшей безопасности. Всегда проверяйте подписи токенов на серверной стороне."},
+    {"title": "Реализация бесконечного скролла", "text": "Бесконечный скролл динамически подгружает контент по мере прокрутки. Используйте Intersection Observer или обработчики событий скролла с debounce. Отслеживайте offset, состояние загрузки и флаг has_more для предотвращения лишних запросов."},
+    {"title": "Чистая архитектура на Python", "text": "Разделяйте ответственность по слоям: представление, бизнес-логика и доступ к данным. Используйте внедрение зависимостей, держите код, специфичный для фреймворка, на границах, и проектируйте доменную модель в первую очередь."},
+    {"title": "Реалтайм-возможности WebSocket", "text": "WebSocket обеспечивает двунаправленную связь между клиентом и сервером. Они идеально подходят для чатов, уведомлений в реальном времени и live-дашбордов. FastAPI поддерживает WebSocket из коробки."},
+    {"title": "Тестирование асинхронного кода", "text": "Тестирование асинхронного кода на Python требует pytest-asyncio и правильных фикстур. Мокайте внешние зависимости, используйте in-memory базы данных для скорости и тестируйте как позитивные, так и негативные сценарии."},
 ]
 
 
 async def seed():
     async with session_factory() as session:
-        # Check if data already exists
+        # Проверяем, есть ли уже данные
         result = await session.execute(select(User).limit(1))
         if result.scalar():
-            print("Database already seeded. Skipping.")
+            print("База данных уже заполнена. Пропускаем.")
             return
 
         async with session.begin():
@@ -62,7 +62,7 @@ async def seed():
                 post = Post(user_id=user.id, **post_data)
                 session.add(post)
 
-    print(f"Seeded {len(USERS)} users and {len(POSTS)} posts.")
+    print(f"Создано {len(USERS)} пользователей и {len(POSTS)} публикаций.")
 
 
 if __name__ == "__main__":

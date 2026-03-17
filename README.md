@@ -88,92 +88,92 @@ frontend/
 
 ---
 
-## Quick Start
+## Быстрый старт
 
-### Run the whole project:
+### Запуск всего проекта:
 
 ```bash
 docker-compose up --build
 ```
 
-That's it. Services:
-- **Frontend**: http://localhost:3000
+Готово. Сервисы:
+- **Фронтенд**: http://localhost:3000
 - **Backend API**: http://localhost:8000
-- **API Docs (Swagger)**: http://localhost:8000/docs
+- **Документация API (Swagger)**: http://localhost:8000/docs
 - **PostgreSQL**: localhost:5432
 - **Redis**: localhost:6379
 
-### Apply migrations manually (if needed):
+### Применить миграции вручную (если нужно):
 
 ```bash
 docker-compose exec backend alembic upgrade head
 ```
 
-### Seed test data:
+### Заполнить тестовыми данными:
 
 ```bash
 docker-compose exec backend python seed.py
 ```
 
-The seed script creates 3 users and 15 posts automatically on first startup.
+Скрипт создаёт 3 пользователей и 15 публикаций автоматически при первом запуске.
 
 ---
 
-## Environment Variables
+## Переменные окружения
 
-| Variable | Default | Description |
+| Переменная | По умолчанию | Описание |
 |---|---|---|
-| `POSTGRES_HOST` | `postgres` | PostgreSQL host |
-| `POSTGRES_PORT` | `5432` | PostgreSQL port |
-| `POSTGRES_USER` | `trendsee` | Database user |
-| `POSTGRES_PASSWORD` | `trendsee` | Database password |
-| `POSTGRES_DB` | `trendsee` | Database name |
-| `REDIS_HOST` | `redis` | Redis host |
-| `REDIS_PORT` | `6379` | Redis port |
-| `JWT_SECRET` | `change-me-in-production` | JWT signing secret |
-| `CACHE_TTL` | `600` | Redis cache TTL in seconds |
-| `SLOW_DB_DELAY` | `2.0` | Simulated DB delay for cache misses (seconds) |
-| `CORS_ORIGINS` | `["http://localhost:3000"]` | Allowed CORS origins |
-| `VITE_API_URL` | _(empty in prod)_ | Backend URL for frontend dev mode |
+| `POSTGRES_HOST` | `postgres` | Хост PostgreSQL |
+| `POSTGRES_PORT` | `5432` | Порт PostgreSQL |
+| `POSTGRES_USER` | `trendsee` | Пользователь базы данных |
+| `POSTGRES_PASSWORD` | `trendsee` | Пароль базы данных |
+| `POSTGRES_DB` | `trendsee` | Имя базы данных |
+| `REDIS_HOST` | `redis` | Хост Redis |
+| `REDIS_PORT` | `6379` | Порт Redis |
+| `JWT_SECRET` | `change-me-in-production` | Секрет для подписи JWT |
+| `CACHE_TTL` | `600` | TTL кэша Redis в секундах |
+| `SLOW_DB_DELAY` | `2.0` | Имитация задержки БД при промахе кэша (секунды) |
+| `CORS_ORIGINS` | `["http://localhost:3000"]` | Разрешённые CORS-источники |
+| `VITE_API_URL` | _(пусто в prod)_ | URL бэкенда для dev-режима фронтенда |
 
 ---
 
-## API Endpoints
+## Эндпоинты API
 
-### Users
+### Пользователи
 
-| Method | Endpoint | Auth | Description |
+| Метод | Эндпоинт | Авторизация | Описание |
 |--------|----------|------|-------------|
-| `POST` | `/api/v1/users` | No | Create user, returns user + JWT token |
-| `GET` | `/api/v1/users/{id}` | No | Get user info by ID |
-| `GET` | `/api/v1/users/{id}/token` | No | Get JWT token by user ID |
-| `PATCH` | `/api/v1/users/{id}` | No | Update user name |
-| `DELETE` | `/api/v1/users/{id}` | No | Delete user (cascades to posts) |
-| `GET` | `/api/v1/users/{id}/posts` | No | Get user's posts (paginated) |
+| `POST` | `/api/v1/users` | Нет | Создать пользователя, возвращает пользователя + JWT-токен |
+| `GET` | `/api/v1/users/{id}` | Нет | Получить информацию о пользователе по ID |
+| `GET` | `/api/v1/users/{id}/token` | Нет | Получить JWT-токен по ID пользователя |
+| `PATCH` | `/api/v1/users/{id}` | Нет | Обновить имя пользователя |
+| `DELETE` | `/api/v1/users/{id}` | Нет | Удалить пользователя (каскадно удаляет посты) |
+| `GET` | `/api/v1/users/{id}/posts` | Нет | Получить публикации пользователя (с пагинацией) |
 
-### Posts
+### Публикации
 
-| Method | Endpoint | Auth | Description |
+| Метод | Эндпоинт | Авторизация | Описание |
 |--------|----------|------|-------------|
-| `POST` | `/api/v1/posts` | Bearer | Create post (authorized user) |
-| `PATCH` | `/api/v1/posts/{id}` | Bearer | Update post (owner only) |
-| `DELETE` | `/api/v1/posts/{id}` | Bearer | Delete post (owner only) |
+| `POST` | `/api/v1/posts` | Bearer | Создать публикацию (авторизованный пользователь) |
+| `PATCH` | `/api/v1/posts/{id}` | Bearer | Обновить публикацию (только автор) |
+| `DELETE` | `/api/v1/posts/{id}` | Bearer | Удалить публикацию (только автор) |
 
-### Request Examples
+### Примеры запросов
 
-**Create user:**
+**Создать пользователя:**
 ```bash
 curl -X POST http://localhost:8000/api/v1/users \
   -H "Content-Type: application/json" \
-  -d '{"name": "Alice"}'
+  -d '{"name": "Алиса"}'
 ```
 
-Response:
+Ответ:
 ```json
 {
   "user": {
     "id": 1,
-    "name": "Alice",
+    "name": "Алиса",
     "created_at": "2025-01-01T00:00:00+00:00",
     "updated_at": "2025-01-01T00:00:00+00:00"
   },
@@ -181,20 +181,20 @@ Response:
 }
 ```
 
-**Create post (with token):**
+**Создать публикацию (с токеном):**
 ```bash
 curl -X POST http://localhost:8000/api/v1/posts \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer eyJ..." \
-  -d '{"title": "My Post", "text": "Hello world"}'
+  -d '{"title": "Мой пост", "text": "Привет, мир"}'
 ```
 
-**Get posts with pagination:**
+**Получить публикации с пагинацией:**
 ```bash
 curl "http://localhost:8000/api/v1/users/1/posts?limit=20&offset=0"
 ```
 
-Response:
+Ответ:
 ```json
 {
   "items": [...],
@@ -205,109 +205,109 @@ Response:
 
 ---
 
-## Caching Logic
+## Логика кэширования
 
-### How it works:
+### Как это работает:
 
-1. When `GET /api/v1/users/{id}/posts` is called, the service first checks **Redis**
-2. If cached data exists → return immediately (fast path)
-3. If no cache:
-   - `await asyncio.sleep(2)` - simulates slow DB query
-   - Fetch from PostgreSQL
-   - Serialize and store in Redis with **TTL = 600 seconds** (10 minutes)
-4. Posts are considered "hot" for 10 minutes after first fetch
+1. При вызове `GET /api/v1/users/{id}/posts` сервис сначала проверяет **Redis**
+2. Если кэш есть → возвращает сразу (быстрый путь)
+3. Если кэша нет:
+   - `await asyncio.sleep(2)` — имитация медленного запроса к БД
+   - Запрос к PostgreSQL
+   - Сериализация и сохранение в Redis с **TTL = 600 секунд** (10 минут)
+4. Публикации считаются «горячими» 10 минут после первого запроса
 
-### Cache keys:
+### Ключи кэша:
 
-Pattern: `user:{user_id}:posts:{limit}:{offset}`
+Паттерн: `user:{user_id}:posts:{limit}:{offset}`
 
-Example: `user:1:posts:20:0`
+Пример: `user:1:posts:20:0`
 
-### Cache invalidation:
+### Инвалидация кэша:
 
-Cache is **automatically invalidated** when:
-- User **creates** a post → all cached pages for that user are cleared
-- User **updates** a post → same
-- User **deletes** a post → same
+Кэш **автоматически инвалидируется** когда:
+- Пользователь **создаёт** публикацию → очищаются все кэшированные страницы этого пользователя
+- Пользователь **обновляет** публикацию → аналогично
+- Пользователь **удаляет** публикацию → аналогично
 
-Invalidation uses `SCAN` with pattern matching to clear all keys for a user:
+Инвалидация использует `SCAN` с паттерном для очистки всех ключей пользователя:
 ```
 user:{user_id}:posts:*
 ```
 
-This is handled centrally in `CacheService.invalidate_user_posts()`.
+Это обрабатывается централизованно в `CacheService.invalidate_user_posts()`.
 
 ---
 
-## Infinite Scroll
+## Бесконечный скролл
 
-### Frontend implementation:
+### Реализация на фронтенде:
 
-1. `useInfiniteScroll` composable listens to scroll events (with `requestAnimationFrame` debouncing)
-2. When distance to bottom < **500px**, triggers `loadMore()`
-3. Guards:
-   - Won't fire if already loading (`isLoading`)
-   - Won't fire if no more data (`hasMore = false`)
-   - Deduplicates posts by ID (prevents duplicates on fast scrolling)
-4. Backend returns `{ items, total, has_more }` - `has_more` controls when to stop
+1. Composable `useInfiniteScroll` слушает события скролла (с debounce через `requestAnimationFrame`)
+2. Когда расстояние до конца < **500px**, вызывается `loadMore()`
+3. Защиты:
+   - Не срабатывает, если уже идёт загрузка (`isLoading`)
+   - Не срабатывает, если данных больше нет (`hasMore = false`)
+   - Дедупликация постов по ID (предотвращает дубли при быстром скролле)
+4. Бэкенд возвращает `{ items, total, has_more }` — `has_more` контролирует остановку
 
-### Backend pagination:
+### Пагинация на бэкенде:
 
-Query params: `limit` (1-100, default 20), `offset` (≥0, default 0)
+Параметры запроса: `limit` (1–100, по умолчанию 20), `offset` (≥0, по умолчанию 0)
 
 ---
 
-## Running Tests
+## Запуск тестов
 
 ```bash
-# From project root
+# Из корня проекта
 docker-compose exec backend pytest tests/ -v
 
-# Or locally (requires aiosqlite for SQLite async):
+# Или локально (нужен aiosqlite для асинхронного SQLite):
 cd backend
 pip install aiosqlite
 pytest tests/ -v
 ```
 
-### Test coverage:
-- ✅ Create user
-- ✅ Get token
-- ✅ Get user by ID
-- ✅ Get user - 404 for missing user
-- ✅ Create post (authorized)
-- ✅ Create post (unauthorized - rejected)
-- ✅ Get user posts (pagination)
-- ✅ Cache hit verification
-- ✅ Cache invalidation on post creation
-- ✅ Update user
-- ✅ Delete user
-- ✅ Forbidden edit (post ownership)
+### Покрытие тестами:
+- ✅ Создание пользователя
+- ✅ Получение токена
+- ✅ Получение пользователя по ID
+- ✅ Получение пользователя — 404 для несуществующего
+- ✅ Создание публикации (авторизованный)
+- ✅ Создание публикации (неавторизованный — отклонено)
+- ✅ Получение публикаций пользователя (пагинация)
+- ✅ Проверка попадания в кэш
+- ✅ Инвалидация кэша при создании публикации
+- ✅ Обновление пользователя
+- ✅ Удаление пользователя
+- ✅ Запрет редактирования (права на публикацию)
 
 ---
 
-## Error Handling
+## Обработка ошибок
 
-| Status | Meaning |
+| Статус | Значение |
 |--------|---------|
-| `400` | Invalid request (e.g., no fields to update) |
-| `401` | Missing or invalid JWT token |
-| `403` | Action forbidden (e.g., editing someone else's post) |
-| `404` | Resource not found |
-| `422` | Validation error (FastAPI/Pydantic) |
+| `400` | Некорректный запрос (например, нет полей для обновления) |
+| `401` | Отсутствующий или недействительный JWT-токен |
+| `403` | Действие запрещено (например, редактирование чужой публикации) |
+| `404` | Ресурс не найден |
+| `422` | Ошибка валидации (FastAPI/Pydantic) |
 
-All error responses follow the format:
+Все ответы об ошибках следуют формату:
 ```json
 {
-  "detail": "Human-readable error message"
+  "detail": "Понятное сообщение об ошибке"
 }
 ```
 
 ---
 
-## Design Decisions
+## Проектные решения
 
-- **No Pinia** - app state is simple enough to manage with composables and `ref()`. Adding a store would be overengineering.
-- **No component library** - clean CSS with design tokens keeps the bundle small and the design consistent.
-- **Centralized cache service** - all Redis operations go through `CacheService`, making invalidation predictable.
-- **DI via Depends** - clean wiring of DB sessions → repositories → services, easily testable.
-- **Seed on startup** - `seed.py` runs once during container start for immediate demo experience.
+- **Без Pinia** — состояние приложения достаточно простое для управления через composables и `ref()`. Добавление хранилища было бы избыточным.
+- **Без библиотеки компонентов** — чистый CSS с дизайн-токенами сохраняет бандл маленьким, а дизайн — консистентным.
+- **Централизованный сервис кэша** — все операции с Redis проходят через `CacheService`, что делает инвалидацию предсказуемой.
+- **DI через Depends** — чистая связка DB-сессий → репозитории → сервисы, легко тестируемая.
+- **Seed при старте** — `seed.py` выполняется один раз при старте контейнера для моментального демо.
