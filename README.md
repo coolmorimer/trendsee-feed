@@ -61,7 +61,7 @@ frontend/
 ## Что реализовано
 
 - Регистрация и вход по user ID
-- CRUD постов (создание, редактирование, удаление — только свои)
+- CRUD постов (создание, редактирование, удаление - только свои)
 - Лента всех публикаций (доступна без авторизации)
 - Профиль автора со всеми его постами
 - Бесконечный скролл (порог 500px, через requestAnimationFrame)
@@ -75,7 +75,7 @@ frontend/
 
 ## Использование ИИ
 
-В некоторых местах использовал ИИ как помощника — отмечено в комментариях к коду.
+В некоторых местах использовал ИИ как помощника - отмечено в комментариях к коду.
 В основном для вещей, где нужно знать неочевидные детали библиотек:
 - `model_validator` в Pydantic v2 (вытащить данные из ORM-связи перед сериализацией)
 - SCAN/cursor паттерн для инвалидации ключей в Redis (вместо KEYS, который блокирует)
@@ -212,7 +212,7 @@ Response:
 1. When `GET /api/v1/users/{id}/posts` is called, the service first checks **Redis**
 2. If cached data exists → return immediately (fast path)
 3. If no cache:
-   - `await asyncio.sleep(2)` — simulates slow DB query
+   - `await asyncio.sleep(2)` - simulates slow DB query
    - Fetch from PostgreSQL
    - Serialize and store in Redis with **TTL = 600 seconds** (10 minutes)
 4. Posts are considered "hot" for 10 minutes after first fetch
@@ -249,7 +249,7 @@ This is handled centrally in `CacheService.invalidate_user_posts()`.
    - Won't fire if already loading (`isLoading`)
    - Won't fire if no more data (`hasMore = false`)
    - Deduplicates posts by ID (prevents duplicates on fast scrolling)
-4. Backend returns `{ items, total, has_more }` — `has_more` controls when to stop
+4. Backend returns `{ items, total, has_more }` - `has_more` controls when to stop
 
 ### Backend pagination:
 
@@ -273,9 +273,9 @@ pytest tests/ -v
 - ✅ Create user
 - ✅ Get token
 - ✅ Get user by ID
-- ✅ Get user — 404 for missing user
+- ✅ Get user - 404 for missing user
 - ✅ Create post (authorized)
-- ✅ Create post (unauthorized — rejected)
+- ✅ Create post (unauthorized - rejected)
 - ✅ Get user posts (pagination)
 - ✅ Cache hit verification
 - ✅ Cache invalidation on post creation
@@ -306,8 +306,8 @@ All error responses follow the format:
 
 ## Design Decisions
 
-- **No Pinia** — app state is simple enough to manage with composables and `ref()`. Adding a store would be overengineering.
-- **No component library** — clean CSS with design tokens keeps the bundle small and the design consistent.
-- **Centralized cache service** — all Redis operations go through `CacheService`, making invalidation predictable.
-- **DI via Depends** — clean wiring of DB sessions → repositories → services, easily testable.
-- **Seed on startup** — `seed.py` runs once during container start for immediate demo experience.
+- **No Pinia** - app state is simple enough to manage with composables and `ref()`. Adding a store would be overengineering.
+- **No component library** - clean CSS with design tokens keeps the bundle small and the design consistent.
+- **Centralized cache service** - all Redis operations go through `CacheService`, making invalidation predictable.
+- **DI via Depends** - clean wiring of DB sessions → repositories → services, easily testable.
+- **Seed on startup** - `seed.py` runs once during container start for immediate demo experience.
